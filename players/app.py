@@ -1,6 +1,6 @@
-from players.controller.home_controller import HomePageController
+from players.controllers.home_controller import HomePageController
 from players.models.player import Player
-from players.controller.player_controller import PlayerController
+from players.controllers.player_controller import PlayerController
 import subprocess as sp
 
 
