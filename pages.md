@@ -47,11 +47,3 @@ Enter name:
 Enter age:
 Enter email:
 ```
-
-# Edit Player
-
-```
-Enter name [Pablo]:
-Enter age [35]:
-Enter email [pablo@test.com]:
-```
