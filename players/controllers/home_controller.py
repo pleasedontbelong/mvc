@@ -1,15 +1,13 @@
 from players.views.home_view import HomeView
 
 
-class HomePageController:
-
-    @classmethod
-    def dispatch(cls, store=None, input=None):
+class HomePage:
+    def dispatch(self, store=None, input=None):
         choice = HomeView.home()
         if choice.lower() == "q":
             next = "quit"
         elif choice == "1":
-            next = "list_player"
+            next = "player_list"
         elif choice == "2":
-            next = "new_player"
+            next = "player_create"
         return next, None

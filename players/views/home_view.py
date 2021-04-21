@@ -1,5 +1,4 @@
 class HomeView:
-
     @classmethod
     def home(cls):
         print("Welcome\n")

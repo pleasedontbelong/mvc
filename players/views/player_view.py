@@ -1,5 +1,4 @@
 class PlayerView:
-
     @classmethod
     def display_list(cls, players):
         print("\tID\tName\tAge")
@@ -37,5 +36,5 @@ class PlayerView:
             "id": input("Enter an ID: "),
             "name": input("Enter a name: "),
             "age": input("Enter an age: "),
-            "email": input("Enter an email: ")
+            "email": input("Enter an email: "),
         }
