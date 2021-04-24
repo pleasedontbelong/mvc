@@ -12,13 +12,16 @@ class Application:
         "new_player": PlayerController.create,
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
+        "update_player": PlayerController.update,
     }
 
     def __init__(self) -> None:
         self.route = "homepage"
         self.exit = False
         self.route_params = None
+        
         self.store = {
+            "tournament": None,
             "players": [
                 Player(1, "Pablo", 36, "pablo@test.com"),
                 Player(2, "Michel", 40, "michel@test.com"),

@@ -9,13 +9,14 @@ class PlayerView:
         print("1. View Player")
         print("2. New Player")
         print("3. Delete Player")
+        print("4. Update Player")
         print("Q. Exit")
         print("H. Homepage")
 
         choice = input("Choice:")
         extra_info = None
 
-        if choice in ("1", "3"):
+        if choice in ("1", "3", "4"):
             extra_info = int(input("Enter Player Id:"))
 
         return choice, extra_info
@@ -38,4 +39,13 @@ class PlayerView:
             "name": input("Enter a name: "),
             "age": input("Enter an age: "),
             "email": input("Enter an email: ")
+        }
+
+    @classmethod
+    def update(cls, player):
+        return {
+            "id": input(f"Enter a new ID [{player.id}]: "),
+            "name": input(f"Enter a new name [{player.name}]: "),
+            "age": input(f"Enter a new age [{player.age}]: "),
+            "email": input(f"Enter a new email [{player.email}]: ")
         }

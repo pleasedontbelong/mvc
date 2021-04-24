@@ -1,4 +1,4 @@
-from players.models.player import Player
+from players.models.player import Player, PlayerManager
 from players.views.player_view import PlayerView
 
 
@@ -14,6 +14,8 @@ class PlayerController:
             return "new_player", None
         elif choice == "3":
             return "delete_player", player_id
+        elif choice == "4":
+            return "update_player", player_id
         elif choice.lower() == "q":
             return "quit", None
         elif choice.lower() == "h":
@@ -31,6 +33,9 @@ class PlayerController:
         # but it's easier to use `**` to pass the arguments
         player = Player(**data)
 
+        if not player.is_valid():
+            return "errors", "Les informations sont incorrectes"
+
         # we add the player to the store
         store["players"].append(player)
 
@@ -45,13 +50,14 @@ class PlayerController:
         return "list_player", None
 
     @classmethod
-    def view(cls, store, route_params):
+    def view(cls, store, player_id):
         """
-        Display one single player, the route_params correspond to the player ID
+        Display one single player, the player_id correspond to the player ID
         we want to display
         """
         # search the player on the store
-        player = next(p for p in store["players"] if p.id == route_params)
+        manager = PlayerManager(store)
+        player = manager.get_player(player_id)
 
         # we pass the player to the view that will display the player info and
         # the next options
@@ -60,3 +66,14 @@ class PlayerController:
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
+
+    @classmethod
+    def update(cls, store, player_id):
+        manager = PlayerManager(store)
+        player = manager.get_player(player_id)
+
+        data = PlayerView.update(player)
+
+        player.update(**data)
+
+        return "list_player", None
