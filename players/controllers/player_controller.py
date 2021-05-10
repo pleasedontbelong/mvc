@@ -14,6 +14,8 @@ class PlayerController:
             return "new_player", None
         elif choice == "3":
             return "delete_player", player_id
+        elif choice == "4":
+            return "update_player", player_id
         elif choice.lower() == "q":
             return "quit", None
         elif choice.lower() == "h":
@@ -60,3 +62,18 @@ class PlayerController:
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
+
+    @classmethod
+    def update(cls, store, route_params):
+        player = store.get_player(route_params)
+
+        data = PlayerView.update_player(player)
+        errors = Player.validate(data)
+        if errors:
+            print(errors)
+            input("press any key to continue")
+            return "update_player", route_params
+
+        store.update_player(player, data)
+
+        return "homepage", None

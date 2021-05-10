@@ -4,12 +4,34 @@ from players.controllers.player_controller import PlayerController
 import subprocess as sp
 
 
+class Store:
+
+    def __init__(self) -> None:
+        self.store = {"players": []}
+        self.load_players()
+
+    def load_players(self):
+        # lire le players.json et save les instances dans self.store
+        pass
+
+    def get_player(self, player_id):
+        return next(p for p in self.store["players"] if p.id == player_id)
+
+    def update_player(self, player, data):
+        player.name = data["name"]
+        player.age = data["age"]
+        player.email = data["email"]
+        # maj le fichier player.json avec tiny db
+        #...
+
+
 class Application:
 
     routes = {
         "homepage": HomePageController.dispatch,
         "list_player": PlayerController.list,
         "new_player": PlayerController.create,
+        "update_player": PlayerController.update,
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
     }
@@ -18,12 +40,7 @@ class Application:
         self.route = "homepage"
         self.exit = False
         self.route_params = None
-        self.store = {
-            "players": [
-                Player(1, "Pablo", 36, "pablo@test.com"),
-                Player(2, "Michel", 40, "michel@test.com"),
-            ]
-        }
+        self.store = Store()
 
     def run(self):
         while not self.exit:
