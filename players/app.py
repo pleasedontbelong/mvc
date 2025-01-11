@@ -5,9 +5,8 @@ import subprocess as sp
 
 
 class Application:
-
     routes = {
-        "homepage": HomePageController.dispatch,
+        "homepage": HomePageController.main_menu,
         "list_player": PlayerController.list,
         "new_player": PlayerController.create,
         "view_player": PlayerController.view,
@@ -28,7 +27,7 @@ class Application:
     def run(self):
         while not self.exit:
             # Clear the shell output
-            sp.call('clear', shell=True)
+            sp.call("clear", shell=True)
 
             # Get the controller method that should handle our current route
             controller_method = self.routes[self.route]
@@ -38,9 +37,7 @@ class Application:
             # Every controller should return two things:
             # - the next route to display
             # - the parameters needed for the next route
-            next_route, next_params = controller_method(
-                self.store, self.route_params
-            )
+            next_route, next_params = controller_method(self.store, self.route_params)
 
             # set the next route and input
             self.route = next_route

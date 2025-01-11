@@ -3,7 +3,6 @@ from players.views.player_view import PlayerView
 
 
 class PlayerController:
-
     @classmethod
     def list(cls, store, route_params=None):
         choice, player_id = PlayerView.display_list(store["players"])
@@ -37,21 +36,19 @@ class PlayerController:
         return "list_player", None
 
     @classmethod
-    def delete(cls, store, route_params):
+    def delete(cls, store, player_id):
         # remove the player from the store
-        store["players"] = [
-            p for p in store["players"] if p.id != route_params
-        ]
+        store["players"] = [p for p in store["players"] if p.id != player_id]
         return "list_player", None
 
     @classmethod
-    def view(cls, store, route_params):
+    def view(cls, store, player_id):
         """
-        Display one single player, the route_params correspond to the player ID
+        Display one single player, the player_id correspond to the player ID
         we want to display
         """
         # search the player on the store
-        player = next(p for p in store["players"] if p.id == route_params)
+        player = next(p for p in store["players"] if p.id == player_id)
 
         # we pass the player to the view that will display the player info and
         # the next options

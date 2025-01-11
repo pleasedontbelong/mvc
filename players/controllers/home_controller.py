@@ -2,9 +2,8 @@ from players.views.home_view import HomeView
 
 
 class HomePageController:
-
     @classmethod
-    def dispatch(cls, store=None, input=None):
+    def main_menu(cls, store=None, input=None):
         choice = HomeView.home()
         if choice.lower() == "q":
             next = "quit"
