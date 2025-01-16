@@ -1,14 +1,17 @@
+from players.screen import clear_screen
 from players.views.home_view import HomeView
 
 
 class HomePageController:
     @classmethod
+    @clear_screen
     def main_menu(cls, store=None, input=None):
+        from players.controllers.player_controller import PlayerController
+
         choice = HomeView.home()
         if choice.lower() == "q":
-            next = "quit"
+            return
         elif choice == "1":
-            next = "list_player"
+            PlayerController.list(store)
         elif choice == "2":
-            next = "new_player"
-        return next, None
+            raise Exception("WIP Not implemented yet")

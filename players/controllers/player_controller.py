@@ -1,27 +1,31 @@
+from players.controllers.home_controller import HomePageController
 from players.models.player import Player
+from players.screen import clear_screen
 from players.views.player_view import PlayerView
 
 
 class PlayerController:
     @classmethod
+    @clear_screen
     def list(cls, store, route_params=None):
-        choice, player_id = PlayerView.display_list(store["players"])
+        choice, player = PlayerView.display_list(store["players"])
 
         if choice == "1":
-            return "view_player", player_id
+            cls.view(store, player)
         elif choice == "2":
-            return "new_player", None
+            cls.create(store)
         elif choice == "3":
-            return "delete_player", player_id
+            cls.delete(store, player)
         elif choice.lower() == "q":
-            return "quit", None
+            return
         elif choice.lower() == "h":
-            return "homepage", None
+            HomePageController.main_menu(store)
         else:
             raise Exception("invalid choice")
 
     @classmethod
-    def create(cls, store, route_params=None):
+    @clear_screen
+    def create(cls, store):
         # call the view that will return us a dict with the new player info
         data = PlayerView.create_player()
 
@@ -33,27 +37,18 @@ class PlayerController:
         # we add the player to the store
         store["players"].append(player)
 
-        return "list_player", None
+        cls.list(store)
 
     @classmethod
-    def delete(cls, store, player_id):
+    @clear_screen
+    def delete(cls, store, player):
         # remove the player from the store
-        store["players"] = [p for p in store["players"] if p.id != player_id]
-        return "list_player", None
+        store["players"].remove(player)
+        cls.list(store)
 
     @classmethod
-    def view(cls, store, player_id):
-        """
-        Display one single player, the player_id correspond to the player ID
-        we want to display
-        """
-        # search the player on the store
-        player = next(p for p in store["players"] if p.id == player_id)
-
-        # we pass the player to the view that will display the player info and
-        # the next options
-        choice = PlayerView.detail_player(player)
-        if choice.lower() == "q":
-            return "quit", None
-        elif choice.lower() == "h":
-            return "homepage", None
+    @clear_screen
+    def view(cls, store, player: Player):
+        # we pass the player to the view that will display the player info
+        PlayerView.detail_player(player)
+        cls.list(store)
